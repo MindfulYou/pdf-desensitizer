@@ -304,13 +304,13 @@ MIT License. See [LICENSE](./LICENSE).
 
 If this project helps you, please consider giving it a Star.
 
-如果这个项目对你有帮助，欢迎给仓库点一个 Star。万一暴富了呢？
+如果这个项目对你有帮助，欢迎给仓库点一个 Star。
 
-## WeChat Group / 微信交流群
+You can also support the author via Alipay.
 
-A WeChat group QR code will be added later.
+也可以通过支付宝支持作者。一杯美式，或者一碗豆浆，一瓶水也行。
 
-微信群二维码后续补充。
+![Alipay QR Code](./assets/alipay.png)
 
 ## About the Author / 关于作者
 
