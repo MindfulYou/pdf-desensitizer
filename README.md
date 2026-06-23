@@ -299,3 +299,22 @@ Please read [CONTRIBUTING.md](./CONTRIBUTING.md) before contributing. Do not upl
 ## License / 许可
 
 MIT License. See [LICENSE](./LICENSE).
+
+## Support / 支持作者
+
+If this project helps you, please consider giving it a Star.
+
+如果这个项目对你有帮助，欢迎给仓库点一个 Star。万一暴富了呢？
+
+## WeChat Group / 微信交流群
+
+A WeChat group QR code will be added later.
+
+微信群二维码后续补充。
+
+## About the Author / 关于作者
+
+Created and maintained by **XueyouChu**.
+
+- GitHub: [MindfulYou](https://github.com/MindfulYou)
+- Email: cxy@youshengyu.com
