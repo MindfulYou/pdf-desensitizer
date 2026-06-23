@@ -310,7 +310,7 @@ You can also support the author via Alipay.
 
 也可以通过支付宝支持作者。一杯美式，或者一碗豆浆，一瓶水也行。
 
-![Alipay QR Code](./assets/alipay.png)
+<img src="./assets/alipay.png" alt="Alipay QR Code" width="220">
 
 ## About the Author / 关于作者
 
