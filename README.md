@@ -1,5 +1,9 @@
 # PDF Desensitizer / PDF 脱敏工具
 
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-Beta-orange)
+
 ## 中文说明
 
 本地 PDF 脱敏工具。它会识别中文人名、机构、公司全称/简称、地名等敏感名词，在原 PDF 的文字坐标上执行 redaction，并绘制灰度马赛克遮罩，尽量保持表格、图片、页眉页脚和页面版式不变。
