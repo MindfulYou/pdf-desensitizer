@@ -1,0 +1,13 @@
+# 手动脱敏词示例 / Manual redaction terms example
+# 每行一个词，# 开头的行为注释
+# One term per line. Lines starting with # are comments.
+
+# 人名 / Personal names
+陈建国
+刘洋
+周明华
+马超
+
+# 公司名 / Company names
+万科企业股份有限公司
+小米科技有限责任公司
