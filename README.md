@@ -323,7 +323,7 @@ MIT License. See [LICENSE](./LICENSE).
 
 如果这个项目对你有帮助，欢迎给仓库点一个 Star。
 
-也可以通过支付宝支持作者。一杯美式，或者一碗豆浆，一瓶水也行。
+也可以通过支付宝支持作者。
 
 <img src="./assets/alipay.png" alt="Alipay QR Code" width="220">
 
