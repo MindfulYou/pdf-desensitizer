@@ -3,6 +3,7 @@
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![Status](https://img.shields.io/badge/Status-Beta-orange)
+![Tests](https://github.com/MindfulYou/pdf-desensitizer/actions/workflows/tests.yml/badge.svg)
 
 ## 中文说明
 
