@@ -491,7 +491,7 @@ You can manually tell the tool what to cover.
 
 For example:
 
-    python pdf_desensitize.py ~/Desktop/OriginalPDF ~/Desktop/RedactedPDF --custom-names ZhangSan --custom-companies ExampleCompany
+    python pdf_desensitize.py ~/Desktop/OriginalPDF ~/Desktop/RedactedPDF --custom-names 陈建国 刘洋 --custom-companies 万科企业股份有限公司
 
 For many terms, create a text file with one term per line and use `--custom-words`.
 
