@@ -182,6 +182,7 @@ def redact_pdf(
         organizations = set(detected.organizations)
         aliases = set(detected.aliases)
         locations = set(detected.locations)
+        contract_terms = set(detected.contract_terms)
         names.update(name for name in manual_names if name in text)
         companies.update(company for company in manual_companies if company in text)
         terms = (
@@ -190,6 +191,7 @@ def redact_pdf(
             + [(value, "organization") for value in organizations]
             + [(value, "alias") for value in aliases]
             + [(value, "location") for value in locations]
+            + [(value, "contract") for value in contract_terms]
         )
         if redact_visible_title and page.number == 0:
             terms.extend(_first_page_title_terms(page))

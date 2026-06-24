@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pdf-desensitizer"
-version = "1.1.0"
+version = "1.2.0"
 description = "Local PDF redaction tool for Chinese names and company names while preserving layout."
 readme = "README.md"
 requires-python = ">=3.9"

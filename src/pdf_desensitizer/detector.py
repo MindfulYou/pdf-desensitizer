@@ -98,6 +98,7 @@ class DetectionResult:
     organizations: list[str]
     aliases: list[str]
     locations: list[str]
+    contract_terms: list[str]
 
 
 def is_valid_name_candidate(text: str) -> bool:
@@ -237,6 +238,31 @@ LOCATION_SUFFIX_RE = re.compile(
     r"[\u4e00-\u9fff]{2,12}(?:省|市|区|县|镇|乡|街道|路|街|大道|园区|新区|开发区|高新区)"
 )
 
+CN_MONEY_DIGITS = "零〇一二三四五六七八九壹贰叁肆伍陆柒捌玖拾十佰百仟千万亿兆元圆角分整正"
+CONTRACT_AMOUNT_RES = [
+    re.compile(r"(?:人民币|金额|合同价款|合同金额|总价|价款|费用|服务费|货款|付款金额)[\s：:]*[¥￥]?\s*[\d,，]+(?:\.\d{1,2})?\s*(?:元|万元|亿元)?"),
+    re.compile(r"[¥￥]\s*[\d,，]+(?:\.\d{1,2})?\s*(?:元|万元|亿元)?"),
+    re.compile(r"[\d,，]+(?:\.\d{1,2})?\s*(?:元整|万元整|亿元整|元|万元|亿元)"),
+    re.compile(r"(?:人民币)?[" + CN_MONEY_DIGITS + r"]{2,40}(?:元|圆)(?:[" + CN_MONEY_DIGITS + r"]{0,12})"),
+]
+PARTY_LABEL_RE = re.compile(
+    r"(?:^|[\n\r])(?:甲方|乙方|丙方|丁方|合同甲方|合同乙方|发包方|承包方|委托方|受托方|买方|卖方|采购方|供应商|服务方|客户)[\s（(]*[^：:\n\r]{0,12}[\s）)]*[\s：:]+([^\n\r；;]{2,80})"
+)
+ACCOUNT_LABELS = [
+    "纳税人名称", "纳税人识别号", "统一社会信用代码", "税号", "办公地址", "注册地址",
+    "通讯地址", "联系地址", "地址", "电话", "座机", "手机", "联系电话", "联系方式",
+    "联系人姓名", "联系人", "开户名称", "账户名称", "户名", "开户银行", "开户行",
+    "银行账号", "银行账户", "账号", "账户", "收款账号", "付款账号", "收款人",
+]
+ACCOUNT_LABEL_RE = re.compile(
+    r"(?:"
+    + "|".join(re.escape(label) for label in sorted(ACCOUNT_LABELS, key=len, reverse=True))
+    + r")[\s：:]+([^\n\r；;]{2,100})"
+)
+PHONE_RE = re.compile(r"(?<!\d)(?:1[3-9]\d{9}|0\d{2,3}[-\s]?\d{7,8}(?:[-\s]?\d{1,6})?)(?!\d)")
+TAX_ID_RE = re.compile(r"(?<![A-Z0-9])(?:[0-9A-Z]{15}|[0-9A-Z]{18}|[0-9A-Z]{20})(?![A-Z0-9])")
+BANK_ACCOUNT_RE = re.compile(r"(?<!\d)(?:\d[\s-]?){12,30}\d(?!\d)")
+
 
 def _clean_org_candidate(candidate: str) -> str:
     candidate = candidate.strip(" \t\r\n，,。、；;：:（）()「」『』[]【】")
@@ -307,16 +333,64 @@ def find_locations(text: str) -> list[str]:
     return sorted(found, key=lambda v: (text.find(v), v))
 
 
+def _clean_contract_value(value: str) -> str:
+    value = value.strip(" \t\r\n，,。、；;：:（）()「」『』[]【】")
+    value = re.sub(r"\s+", " ", value)
+    return value
+
+
+def _split_contract_value(value: str) -> list[str]:
+    value = _clean_contract_value(value)
+    if not value:
+        return []
+    parts = [
+        _clean_contract_value(part)
+        for part in re.split(r"[，,、/｜|]", value)
+        if _clean_contract_value(part)
+    ]
+    values = parts if len(parts) > 1 else [value]
+    return [item for item in values if 2 <= len(item) <= 80]
+
+
+def find_contract_sensitive_terms(text: str) -> list[str]:
+    """Find contract-specific sensitive values without redacting normal clauses."""
+
+    found: set[str] = set()
+
+    for pattern in CONTRACT_AMOUNT_RES:
+        for match in pattern.finditer(text):
+            value = _clean_contract_value(match.group(0))
+            if value:
+                found.add(value)
+
+    for match in PARTY_LABEL_RE.finditer(text):
+        for value in _split_contract_value(match.group(1)):
+            if not value.startswith(("以下简称", "以下称")):
+                found.add(value)
+
+    for match in ACCOUNT_LABEL_RE.finditer(text):
+        for value in _split_contract_value(match.group(1)):
+            found.add(value)
+
+    for pattern in (PHONE_RE, TAX_ID_RE, BANK_ACCOUNT_RE):
+        for match in pattern.finditer(text):
+            found.add(_clean_contract_value(match.group(0)))
+
+    return sorted(found, key=lambda v: (text.find(v), v))
+
+
 def find_sensitive_items(text: str) -> DetectionResult:
     names = find_chinese_names_in_text(text)
     companies = find_company_names(text)
     organizations = find_organization_names(text)
     aliases = [value for value in derive_aliases(companies + organizations) if value in text]
     locations = find_locations(text)
+    contract_terms = find_contract_sensitive_terms(text)
     return DetectionResult(
         names=names,
         companies=companies,
         organizations=organizations,
         aliases=aliases,
         locations=locations,
+        contract_terms=contract_terms,
     )

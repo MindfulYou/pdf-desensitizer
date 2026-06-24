@@ -1,6 +1,7 @@
 from pdf_desensitizer.detector import (
     find_chinese_names_in_text,
     find_company_names,
+    find_contract_sensitive_terms,
     find_sensitive_items,
 )
 
@@ -43,3 +44,29 @@ def test_finds_organizations_aliases_and_locations():
     assert "华为技术有限公司" in result.companies
     assert "华为" in result.aliases
     assert "深圳" in result.locations
+
+
+def test_finds_contract_amounts_parties_and_account_fields():
+    text = """
+甲方：北京星河科技有限公司
+乙方：上海云杉咨询有限公司
+合同金额：人民币壹佰贰拾万元整（￥1,200,000.00元）
+纳税人名称：北京星河科技有限公司
+纳税人识别号：91110108MA01ABCDE1
+办公地址：北京市海淀区知春路88号
+电话：010-88886666
+手机：13800138000
+联系人姓名：陈建国
+银行账号：6222 0000 1111 2222 333
+"""
+    terms = find_contract_sensitive_terms(text)
+    assert "北京星河科技有限公司" in terms
+    assert "上海云杉咨询有限公司" in terms
+    assert "人民币壹佰贰拾万元整" in terms
+    assert "￥1,200,000.00元" in terms
+    assert "91110108MA01ABCDE1" in terms
+    assert "北京市海淀区知春路88号" in terms
+    assert "010-88886666" in terms
+    assert "13800138000" in terms
+    assert "陈建国" in terms
+    assert "6222 0000 1111 2222 333" in terms

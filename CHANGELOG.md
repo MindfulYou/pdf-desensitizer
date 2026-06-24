@@ -1,5 +1,25 @@
 # Changelog / 更新日志
 
+## [1.2.0] - 2026-06-24
+
+### 中文
+
+#### 新增
+
+- 增加合同类敏感信息识别，包括合同金额、中文大写金额、甲乙丙丁等签订方名称。
+- 增加账户与税务联系信息识别，包括纳税人名称、纳税人识别号、统一社会信用代码、办公地址、电话、手机、联系人姓名、开户行和银行账号等。
+- README 增加合同类脱敏范围说明，明确工具保留合同条文结构，只遮盖各方详细信息。
+- README 增加 `zsh: command not found: python` 常见问题，提示 macOS 用户使用 `python3`。
+
+### English
+
+#### Added
+
+- Added contract-specific sensitive term detection, including contract amounts, Chinese uppercase amounts, and Party A/B/C/D names.
+- Added account, tax, and contact field detection, including taxpayer names, tax IDs, unified social credit codes, office addresses, phone numbers, contact names, bank names, and bank accounts.
+- Added README guidance for contract redaction scope: keep contract clauses readable while redacting detailed party information.
+- Added README FAQ for `zsh: command not found: python`, advising macOS users to use `python3`.
+
 ## [1.1.0] - 2026-06-22
 
 ### 中文
