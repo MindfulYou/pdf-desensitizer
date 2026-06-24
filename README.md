@@ -380,14 +380,6 @@ MIT License. See [LICENSE](./LICENSE).
 
 <img src="./assets/alipay.png" alt="Alipay QR Code" width="220">
 
-## 微信交流群
-
-扫码加入微信交流群。
-
-<img src="./assets/wechat-group.png" alt="WeChat Group QR Code" width="220">
-
-> 微信群二维码可能会过期。如果二维码失效，可以提交 issue 或联系作者。
-
 ## 关于作者
 
 作者：**XueyouChu**
@@ -757,14 +749,6 @@ If this project helps you, please consider giving it a Star.
 You can also support the author via Alipay.
 
 <img src="./assets/alipay.png" alt="Alipay QR Code" width="220">
-
-## WeChat Group
-
-Scan the QR code to join the WeChat group.
-
-<img src="./assets/wechat-group.png" alt="WeChat Group QR Code" width="220">
-
-> The QR code may expire. If it does, please open an issue or contact the author.
 
 ## About the Author
 
